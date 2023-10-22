@@ -8,5 +8,5 @@ Get all movies
 Get movies by Genre filter
 - /movies?genre=type-genre
 
-- Get an Movie by ID
+Get an Movie by ID
 - /movies/:id
