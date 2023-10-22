@@ -1,5 +1,8 @@
 # API Movies
-The purpose of this application is to build a movie API with Node, Express and Zod
+The purpose of this application is to build a movie API with Node, Express and Zod.
+You can see this App:
+https://api-rest-express-movies-dev-qzmp.2.us-1.fl0.io/
+
 ## Resources
 
 ### Get all movies (GET)
