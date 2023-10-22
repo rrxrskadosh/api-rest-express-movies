@@ -32,31 +32,23 @@ app.get('/movies/:id', (req, res) => {
 })
 
 // Create an Movie
-app.post('/movies/', (req, res) => {
-    const {
-      title,
-      genre,
-      year,
-      director,
-      duration,
-      rate,
-      poster
-    } = req.body
+app.post('/movies', (req, res) => {
+    const result = validateMovie(req.body)
   
+    if (!result.success) {
+      return res.status(400).json({ error: JSON.parse(result.error.message) })
+    }
+  
+    // in Database
     const newMovie = {
       id: crypto.randomUUID(), // uuid v4
-      title,
-      genre,
-      year,
-      director,
-      duration,
-      rate: rate ?? 0,
-      poster
+      ...result.data
     }
+
     movies.push(newMovie)
   
-    res.status(201).json(newMovie) // to update the client cache
-  })
+    res.status(201).json(newMovie)
+})
 
 const PORT = process.env.PORT ?? 1234
 app.listen(PORT, () => {
