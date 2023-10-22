@@ -50,6 +50,20 @@ app.post('/movies', (req, res) => {
     res.status(201).json(newMovie)
 })
 
+// Delete an Movie
+app.delete('/movies/:id', (req, res) => {
+    const { id } = req.params
+    const movieIndex = movies.findIndex(movie => movie.id === id)
+  
+    if (movieIndex === -1) {
+      return res.status(404).json({ message: 'Movie not found' })
+    }
+  
+    movies.splice(movieIndex, 1)
+  
+    return res.json({ message: 'Movie deleted' })
+  })
+
 const PORT = process.env.PORT ?? 1234
 app.listen(PORT, () => {
     console.log(`server listen on port http://localhost:${PORT}`)
