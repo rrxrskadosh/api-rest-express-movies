@@ -1,5 +1,6 @@
 const express = require('express')
 const movies = require("./movies.json")
+const crypto = require('node:crypto')
 
 const app = express()
 
@@ -11,7 +12,6 @@ app.get('/', (req, res) => {
 })
 
 // Get All Movies
-
 app.get('/movies', (req, res) => {
     const { genre } = req.query
     if (genre) {
@@ -31,6 +31,32 @@ app.get('/movies/:id', (req, res) => {
     res.status(404).json({message: 'Movie not found'})
 })
 
+// Create an Movie
+app.post('/movies/', (req, res) => {
+    const {
+      title,
+      genre,
+      year,
+      director,
+      duration,
+      rate,
+      poster
+    } = req.body
+  
+    const newMovie = {
+      id: crypto.randomUUID(), // uuid v4
+      title,
+      genre,
+      year,
+      director,
+      duration,
+      rate: rate ?? 0,
+      poster
+    }
+    movies.push(newMovie)
+  
+    res.status(201).json(newMovie) // to update the client cache
+  })
 
 const PORT = process.env.PORT ?? 1234
 app.listen(PORT, () => {
