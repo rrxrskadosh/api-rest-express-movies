@@ -1,5 +1,6 @@
 const express = require('express')
 const crypto = require('node:crypto')
+const cors = require('cors')
 
 const app = express()
 
