@@ -1,8 +1,10 @@
 const express = require('express')
-const movies = require("./movies.json")
 const crypto = require('node:crypto')
 
 const app = express()
+
+const movies = require('./movies.json')
+const { validateMovie, validatePartialMovie } = require('./schemas/movies')
 
 app.disabled('x-powered-by')
 app.use(express.json())
@@ -10,6 +12,28 @@ app.use(express.json())
 app.get('/', (req, res) => {
     res.json({ message: "Hello server API Movies!" })
 })
+
+
+// CORS
+app.use(cors({
+    origin: (origin, callback) => {
+      const ACCEPTED_ORIGINS = [
+        'http://localhost:8080',
+        'http://localhost:1234',
+        'https://movies.com',
+    ]
+  
+    if (ACCEPTED_ORIGINS.includes(origin)) {
+        return callback(null, true)
+    }
+  
+    if (!origin) {
+        return callback(null, true)
+    }
+  
+      return callback(new Error('Not allowed by CORS'))
+    }
+}))
 
 // Get All Movies
 app.get('/movies', (req, res) => {
