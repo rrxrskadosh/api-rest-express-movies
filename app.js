@@ -1,14 +1,18 @@
-const express = require('express')
-const crypto = require('node:crypto')
-const cors = require('cors')
+import express, { json } from 'express'
+import { randomUUID } from 'node:crypto'
+// Import readJSON require utils readJSON from creating require
+import { readJSON } from './utils.js'
+import cors from 'cors'
 
 const app = express()
 
-const movies = require('./movies.json')
-const { validateMovie, validatePartialMovie } = require('./schemas/movies')
+// Using readJSON
+const movies = readJSON ('./movies.json')
+
+import { validateMovie, validatePartialMovie } from './schemas/movies.js'
 
 app.disabled('x-powered-by')
-app.use(express.json())
+app.use(json())
 
 app.get('/', (req, res) => {
     res.json({ message: "Hello server API Movies!" })
@@ -66,7 +70,7 @@ app.post('/movies', (req, res) => {
   
     // in Database
     const newMovie = {
-      id: crypto.randomUUID(), // uuid v4
+      id: randomUUID(), // uuid v4
       ...result.data
     }
 
