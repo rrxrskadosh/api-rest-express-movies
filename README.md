@@ -24,3 +24,9 @@ Body Request:
 - duration,
 - rate,
 - poster
+
+### Delete an Movie (DELETE)
+- /movies/:id
+
+### Update an Movie (PATCH)
+- /movies/:id
